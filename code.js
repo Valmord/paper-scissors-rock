@@ -37,25 +37,22 @@ function playRound(playerChoice, computerChoice){
   score.total += 1;
 }
 
-function displayScore(prefix = "Score"){
-  console.log(
-    `${prefix}:
-     ${score.wins} wins,
-     ${score.draws} ties,
-     ${score.losses} losses`)
+
+const btnContainer = document.querySelector('.container')
+btnContainer.addEventListener('click', e => {
+  const playerChoice = e.target.innerText.toLowerCase();
+  playGame(playerChoice);
+  e.stopPropagation();
+})
+
+function playGame(playerChoice){
+  let computerChoice = getComputerChoice();
+  playRound(playerChoice,computerChoice);
+  displayScore();
 }
 
-
-// ----- Code Execution starts here -----
-function game(){
-  while (true) {
-    let computerChoice = getComputerChoice();
-    let playerChoice = getPlayerChoice();
-    if (playerChoice === null || playerChoice === 'q') break;
-    playRound(playerChoice,computerChoice);
-    displayScore("Score");
-  }
-  displayScore("Final Score")
+function displayScore(){
+  const results = document.querySelector('.results');
+  results.innerText = `Score: ${score.wins} wins, ${score.draws} ties, ${score.losses} losses`;
+  
 }
-
-game();
